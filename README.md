@@ -59,52 +59,51 @@ Monte Carlo Simulation digunakan untuk menghasilkan dataset training dan sebagai
 * Final Monte Carlo replication: 1,000
 
 Dataset hasil simulasi terdiri dari 2.000 kombinasi vektor base stock dan nilai profit per bulan.
+## Hasil dan Evaluasi
 
-## Results
+### Perbandingan Performa Algoritma
 
-### Algorithm Performance Comparison
+Evaluasi dilakukan terhadap empat varian algoritma, yaitu HHO Conventional, HHO Surrogate-Assisted, VNS Conventional, dan VNS Surrogate-Assisted. Perbandingan dilakukan berdasarkan dua kriteria, yaitu profit bulanan dan waktu komputasi.
 
-Performance evaluation was conducted using four algorithm variants: HHO Conventional, HHO Surrogate-Assisted, VNS Conventional, and VNS Surrogate-Assisted. The comparison considers two criteria: monthly profit and computational time.
+| Varian Algoritma       | Profit (USD/bulan) | Waktu Komputasi (s) |
+| ---------------------- | -----------------: | ------------------: |
+| HHO Conventional       |             243.86 |              860.37 |
+| HHO Surrogate-Assisted |             225.34 |               96.93 |
+| VNS Conventional       |             205.71 |              830.38 |
+| VNS Surrogate-Assisted |             191.50 |               92.61 |
 
-| Algorithm Variant      | Profit (USD/month) | Computational Time (s) |
-| ---------------------- | -----------------: | ---------------------: |
-| HHO Conventional       |             243.86 |                 860.37 |
-| HHO Surrogate-Assisted |             225.34 |                  96.93 |
-| VNS Conventional       |             205.71 |                 830.38 |
-| VNS Surrogate-Assisted |             191.50 |                  92.61 |
+### Vektor Solusi Optimal
 
-### Optimal Target Inventory Level
+Proses optimasi menghasilkan vektor base stock optimal berdimensi 12 untuk masing-masing varian algoritma. Setiap nilai \(x_i\) menunjukkan target persediaan untuk item ke-\(i\) pada sistem inventori probabilistik Assemble-to-Order (ATO).
 
-The optimization process generated a 12-dimensional optimal target inventory level vector for each algorithm variant. Each element represents the target inventory level of an item in the probabilistic Assemble-to-Order (ATO) inventory system.
+| Varian Algoritma       | x₁ | x₂ | x₃ | x₄ | x₅ | x₆ | x₇ | x₈ | x₉ | x₁₀ | x₁₁ | x₁₂ | Profit (USD/bulan) |
+| ---------------------- | -: | -: | -: | -: | -: | -: | -: | -: | -: | --: | --: | --: | -----------------: |
+| HHO Conventional       |  2 |  4 |  3 |  3 |  4 |  4 |  3 |  3 |  3 |   4 |   3 |   3 |             243.86 |
+| HHO Surrogate-Assisted |  4 |  3 |  6 |  2 |  6 |  7 |  6 | 11 |  5 |   6 |   4 |   6 |             225.34 |
+| VNS Conventional       |  4 |  6 | 22 | 14 | 15 |  3 |  3 | 16 |  4 |   5 |   4 |   4 |             205.71 |
+| VNS Surrogate-Assisted | 15 |  4 |  5 |  2 |  7 | 16 | 23 | 18 | 10 |   3 |   9 |   3 |             191.50 |
 
-| Varian Algoritma | x₁ | x₂ | x₃ | x₄ | x₅ | x₆ | x₇ | x₈ | x₉ | x₁₀ | x₁₁ | x₁₂ | Profit (USD/bulan) |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| HHO Conventional | 2 | 4 | 3 | 3 | 4 | 4 | 3 | 3 | 3 | 4 | 3 | 3 | 243.86 |
-| HHO Surrogate-Assisted | 4 | 3 | 6 | 2 | 6 | 7 | 6 | 11 | 5 | 6 | 4 | 6 | 225.34 |
-| VNS Conventional | 4 | 6 | 22 | 14 | 15 | 3 | 3 | 16 | 4 | 5 | 4 | 4 | 205.71 |
-| VNS Surrogate-Assisted | 15 | 4 | 5 | 2 | 7 | 16 | 23 | 18 | 10 | 3 | 9 | 3 | 191.50 |
+### Evaluasi TOPSIS
 
-### TOPSIS Evaluation
+TOPSIS digunakan untuk mengevaluasi performa keseluruhan dari setiap varian algoritma berdasarkan profit dan waktu komputasi. Nilai kedekatan relatif (\(\xi_i\)) yang lebih tinggi menunjukkan bahwa solusi semakin dekat dengan solusi ideal positif dan semakin jauh dari solusi ideal negatif.
 
-TOPSIS was used to evaluate the overall performance of each algorithm based on profit and computational time. A higher relative closeness value (ξᵢ) indicates a solution that is closer to the positive ideal solution and farther from the negative ideal solution.
-
-| Algorithm Variant          |     Profit |  Time (s) |           d⁺ |           d⁻ |           ξᵢ |
+| Varian Algoritma           |     Profit | Waktu (s) |           d⁺ |           d⁻ |           ξᵢ |
 | -------------------------- | ---------: | --------: | -----------: | -----------: | -----------: |
 | HHO Conventional           |     243.86 |    860.37 |     420.5195 |     43.80752 |     0.094346 |
 | **HHO Surrogate-Assisted** | **225.34** | **96.93** | **15.67457** | **419.1107** | **0.963949** |
 | VNS Conventional           |     205.71 |    830.38 |     405.3519 |     20.27725 |     0.047641 |
 | VNS Surrogate-Assisted     |     191.50 |     92.61 |     43.80752 |     420.5195 |     0.905654 |
 
-Based on the TOPSIS results, **HHO Surrogate-Assisted achieved the highest relative closeness value (ξᵢ = 0.963949)**. Although HHO Conventional produced the highest profit, it required substantially longer computational time. HHO Surrogate-Assisted achieved a competitive profit with significantly lower computational time, resulting in the best overall trade-off between solution quality and computational efficiency.
+Berdasarkan hasil TOPSIS, **HHO Surrogate-Assisted memperoleh nilai kedekatan relatif tertinggi (ξᵢ = 0.963949)**. Meskipun HHO Conventional menghasilkan profit tertinggi sebesar 243.86 USD/bulan, waktu komputasinya jauh lebih lama. HHO Surrogate-Assisted menghasilkan profit yang tetap kompetitif dengan waktu komputasi yang jauh lebih rendah, sehingga memberikan trade-off terbaik antara kualitas solusi dan efisiensi komputasi.
 
-### Key Findings
+### Temuan Utama
 
-* **HHO Surrogate-Assisted** achieved the highest TOPSIS score of **0.963949**.
-* HHO Conventional generated the highest real profit at **243.86 USD/month**, with an optimal target inventory vector of **[2, 4, 3, 3, 4, 4, 3, 3, 3, 4, 3, 3]**.
-* HHO Surrogate-Assisted generated a profit of **225.34 USD/month** with an optimal vector of **[4, 3, 6, 2, 6, 7, 6, 11, 5, 6, 4, 6]**.
-* Surrogate-assisted approaches substantially reduced computational time compared with their conventional counterparts.
-* **HHO Surrogate-Assisted provided the best balance between profitability and computational efficiency**.
-* Based on the TOPSIS evaluation, **HHO Surrogate-Assisted was selected as the preferred approach** among the four algorithm variants.
+* **HHO Surrogate-Assisted** memperoleh nilai TOPSIS tertinggi sebesar **0.963949**.
+* **HHO Conventional** menghasilkan profit tertinggi sebesar **243.86 USD/bulan** dengan vektor base stock **[2, 4, 3, 3, 4, 4, 3, 3, 3, 4, 3, 3]**.
+* **HHO Surrogate-Assisted** menghasilkan profit sebesar **225.34 USD/bulan** dengan vektor base stock **[4, 3, 6, 2, 6, 7, 6, 11, 5, 6, 4, 6]**.
+* Pendekatan **surrogate-assisted** menghasilkan waktu komputasi yang jauh lebih rendah dibandingkan pendekatan konvensional.
+* **HHO Surrogate-Assisted memberikan keseimbangan terbaik antara profit dan efisiensi komputasi**.
+* Berdasarkan evaluasi TOPSIS, **HHO Surrogate-Assisted dipilih sebagai pendekatan terbaik** dari keempat varian algoritma.
 
 
 ## Technologies
@@ -128,10 +127,6 @@ results/       → Hasil eksperimen
 figures/       → Visualisasi hasil
 docs/          → Dokumen penelitian
 ```
-
-## Reference
-
-Horng, S. C., & Lin, C. Y. (2017). Simulation optimization of inventory systems using metaheuristic and machine learning approaches.
 
 ## Author
 
